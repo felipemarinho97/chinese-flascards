@@ -59,7 +59,7 @@ class Sentences extends React.Component {
 
     fetch(`https://pinyin-word-api.vercel.app/api/sentences/${encodeURI(word)}`)
       .then((res) => res.json())
-      .then((res) => res.sort((a, b) => a.pinyin.length - b.pinyin.length))
+      .then((res) => res.sort((a, b) => a.hanzi.length - b.hanzi.length))
       .then((sentences) => {
         this.setState({ sentences });
       });
@@ -67,6 +67,10 @@ class Sentences extends React.Component {
 
   render() {
     const { sentences } = this.state;
+    const audioLink =
+      item.audio != null
+        ? API_ROOT + "/api/audio/" + encodeURIComponent(item.audio)
+        : undefined;
 
     return (
       <div>
@@ -76,15 +80,7 @@ class Sentences extends React.Component {
           loading={sentences.length == 0}
           dataSource={sentences}
           renderItem={(item) => (
-            <List.Item
-              actions={[
-                <PlayButton
-                  link={
-                    API_ROOT + "/api/audio/" + encodeURIComponent(item.audio)
-                  }
-                />,
-              ]}
-            >
+            <List.Item actions={[<PlayButton link={audioLink} />]}>
               <Space direction="vertical">
                 <Text style={{ fontSize: "large" }}>{item.hanzi}</Text>
                 <Text type="success">{item.pinyin}</Text>
