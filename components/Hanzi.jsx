@@ -37,9 +37,15 @@ class Hanzi extends React.Component {
   }
 
   render() {
-    const { word } = this.props;
+    const { word, width, height } = this.props;
 
-    return <div style={{ margin: "auto" }} id={word + "-container"}></div>;
+    return (
+      <div
+        className="hanzi-container"
+        style={{ margin: "auto", width, height }}
+        id={word + "-container"}
+      ></div>
+    );
   }
 }
 export default Hanzi;

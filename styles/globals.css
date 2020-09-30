@@ -1,5 +1,3 @@
-@import "~antd/dist/antd.css";
-
 .traduction {
   color: #858585;
 }
@@ -10,4 +8,14 @@
 
 .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab {
   font-size: 22px;
+}
+
+.hanzi-container {
+  background: #f2f2f2;
+  border-radius: 1rem;
+  animation: 1.4s ease infinite;
+}
+
+.hanzi-container > * {
+  background: white;
 }

@@ -1,4 +1,8 @@
-import { Card, Layout, Tabs, Tag, Typography } from "antd";
+import Typography from "antd/lib/typography";
+import Tag from "antd/lib/tag";
+import Tabs from "antd/lib/tabs";
+import Layout from "antd/lib/layout";
+import Card from "antd/lib/card";
 import React from "react";
 import { API_ROOT } from "../../components/constants";
 import TraductibleSentence from "../../components/TraductibleSentence";

@@ -1,5 +1,9 @@
-import { SoundOutlined } from "@ant-design/icons";
-import { Button, List, Space, Tag, Typography } from "antd";
+import SoundOutlined from "@ant-design/icons/SoundOutlined";
+import Button from "antd/lib/button";
+import List from "antd/lib/list";
+import Space from "antd/lib/space";
+import Typography from "antd/lib/typography";
+import Tag from "antd/lib/tag";
 import { API_ROOT } from "./constants";
 
 const { Text, Title } = Typography;

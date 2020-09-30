@@ -1,7 +1,10 @@
-import { Badge, Button, Card } from "antd";
+import Button from "antd/lib/button";
+import Badge from "antd/lib/badge";
+import Card from "antd/lib/card";
 import HanziWord from "./HanziWord";
 import { PlayButton } from "./Sentences";
-import { EyeOutlined, HighlightOutlined } from "@ant-design/icons";
+import EyeOutlined from "@ant-design/icons/EyeOutlined";
+import HighlightOutlined from "@ant-design/icons/HighlightOutlined";
 
 export const Quiz = ({ onClick }) => {
   return (

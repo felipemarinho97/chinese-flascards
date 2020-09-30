@@ -1,5 +1,6 @@
-import { TranslationOutlined } from "@ant-design/icons";
-import { Button, Typography } from "antd";
+import TranslationOutlined from "@ant-design/icons/TranslationOutlined";
+import Button from "antd/lib/button";
+import Typography from "antd/lib/typography";
 
 const { Text } = Typography;
 
