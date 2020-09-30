@@ -73,9 +73,6 @@ class CardFront extends React.Component {
   render() {
     const { word, frequency } = this.props;
     const { animate, quiz, link } = this.state;
-    const audioLink = `https://pinyin-word-api.vercel.app/api/audio/pod/${encodeURI(
-      word
-    )}`;
 
     return (
       <Badge.Ribbon style={{ margin: "8px" }} text={`Rank: ${frequency}`}>
