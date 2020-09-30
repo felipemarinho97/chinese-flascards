@@ -5,6 +5,7 @@ import TraductibleSentence from "../../components/TraductibleSentence";
 import Sentences from "../../components/Sentences";
 import UsefulLinks from "../../components/UsefulLinks";
 import CardFront from "../../components/CardFront";
+import words from "../api/words.json";
 
 const { Text, Link } = Typography;
 const { Content, Footer } = Layout;
@@ -60,7 +61,19 @@ const Word = (props) => {
   );
 };
 
-export async function getServerSideProps({ params }) {
+export async function getStaticPaths() {
+  // Call an external API endpoint to get posts
+  const wordsList = words.map((w) => w.simplified);
+
+  // Get the paths we want to pre-render based on posts
+  const paths = wordsList.map((w) => `/card/${encodeURI(w)}`);
+
+  // We'll pre-render only these paths at build time.
+  // { fallback: false } means other routes should 404.
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
   const res = await fetch(
     `${API_ROOT}/api/words?value=${encodeURI(params.word)}`
   );

@@ -24,6 +24,10 @@ class UsefulLinks extends React.Component {
   render() {
     const { links } = this.state;
 
+    if (links.length == 0) {
+      return <></>;
+    }
+
     return (
       <>
         <Title level={4}>Useful Links</Title>

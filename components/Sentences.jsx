@@ -67,10 +67,6 @@ class Sentences extends React.Component {
 
   render() {
     const { sentences } = this.state;
-    const audioLink =
-      item.audio != null
-        ? API_ROOT + "/api/audio/" + encodeURIComponent(item.audio)
-        : undefined;
 
     return (
       <div>
@@ -80,7 +76,9 @@ class Sentences extends React.Component {
           loading={sentences.length == 0}
           dataSource={sentences}
           renderItem={(item) => (
-            <List.Item actions={[<PlayButton link={audioLink} />]}>
+            <List.Item
+              actions={[<PlayButton link={this.getAudioLink(item)} />]}
+            >
               <Space direction="vertical">
                 <Text style={{ fontSize: "large" }}>{item.hanzi}</Text>
                 <Text type="success">{item.pinyin}</Text>
@@ -96,6 +94,12 @@ class Sentences extends React.Component {
         />
       </div>
     );
+  }
+
+  getAudioLink(item) {
+    return item.audio != null
+      ? API_ROOT + "/api/audio/" + encodeURIComponent(item.audio)
+      : undefined;
   }
 }
 export default Sentences;
