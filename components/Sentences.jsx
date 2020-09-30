@@ -1,5 +1,6 @@
 import { SoundOutlined } from "@ant-design/icons";
 import { Button, List, Space, Tag, Typography } from "antd";
+import { API_ROOT } from "./constants";
 
 const { Text, Title } = Typography;
 
@@ -16,8 +17,9 @@ export const PlayButton = ({ link }) => {
 
   return (
     <Button
+      type="primary"
       shape="circle"
-      size="small"
+      size="middle"
       icon={<SoundOutlined />}
       onClick={onClick}
     ></Button>
@@ -57,6 +59,7 @@ class Sentences extends React.Component {
 
     fetch(`https://pinyin-word-api.vercel.app/api/sentences/${encodeURI(word)}`)
       .then((res) => res.json())
+      .then((res) => res.sort((a, b) => a.pinyin.length - b.pinyin.length))
       .then((sentences) => {
         this.setState({ sentences });
       });
@@ -73,7 +76,15 @@ class Sentences extends React.Component {
           loading={sentences.length == 0}
           dataSource={sentences}
           renderItem={(item) => (
-            <List.Item actions={[<PlayButton link={item.audio} />]}>
+            <List.Item
+              actions={[
+                <PlayButton
+                  link={
+                    API_ROOT + "/api/audio/" + encodeURIComponent(item.audio)
+                  }
+                />,
+              ]}
+            >
               <Space direction="vertical">
                 <Text style={{ fontSize: "large" }}>{item.hanzi}</Text>
                 <Text type="success">{item.pinyin}</Text>

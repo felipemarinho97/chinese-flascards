@@ -1,4 +1,4 @@
-import { Card, Layout, Tabs } from "antd";
+import { Card, Layout, Tabs, Tag, Typography } from "antd";
 import React from "react";
 import { API_ROOT } from "../../components/constants";
 import TraductibleSentence from "../../components/TraductibleSentence";
@@ -6,7 +6,8 @@ import Sentences from "../../components/Sentences";
 import UsefulLinks from "../../components/UsefulLinks";
 import CardFront from "../../components/CardFront";
 
-const { Content } = Layout;
+const { Text, Link } = Typography;
+const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
 function renderTabPanes(entries) {
@@ -32,17 +33,29 @@ const Word = (props) => {
     <Layout>
       <Content>
         <Card title={<CardFront word={simplified} frequency={frequencyRank} />}>
-          <h3>HSK {hsk}</h3>
-          <h2>Definitions</h2>
-          <Tabs defaultActiveKey="0" size="large">
+          <Tabs
+            defaultActiveKey="0"
+            size="large"
+            tabBarExtraContent={{ right: <Tag>HSK {hsk}</Tag> }}
+          >
             {renderTabPanes(entries)}
           </Tabs>
           <br />
           <Sentences word={simplified} />
           <br />
           <UsefulLinks word={simplified} />
+          <br />
+          <br />
+          <br />
+          <br />
         </Card>
       </Content>
+      <Footer>
+        <Text>Desenvolvido com ❤️ por </Text>
+        <Link target="_blank" href="https://github.com/felipemarinho97">
+          Felipe Marinho
+        </Link>
+      </Footer>
     </Layout>
   );
 };

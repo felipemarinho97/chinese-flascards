@@ -7,3 +7,7 @@
 .traductible-sentence {
   padding-right: 1em;
 }
+
+.ant-tabs-large > .ant-tabs-nav .ant-tabs-tab {
+  font-size: 22px;
+}

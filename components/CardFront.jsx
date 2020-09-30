@@ -6,8 +6,9 @@ import { EyeOutlined, HighlightOutlined } from "@ant-design/icons";
 export const Quiz = ({ onClick }) => {
   return (
     <Button
+      type="primary"
       shape="circle"
-      size="small"
+      size="middle"
       icon={<HighlightOutlined />}
       onClick={onClick}
     ></Button>
@@ -17,8 +18,9 @@ export const Quiz = ({ onClick }) => {
 export const Animate = ({ onClick }) => {
   return (
     <Button
+      type="primary"
       shape="circle"
-      size="small"
+      size="middle"
       icon={<EyeOutlined />}
       onClick={onClick}
     ></Button>
@@ -32,6 +34,9 @@ class CardFront extends React.Component {
     this.state = {
       animate: false,
       quiz: false,
+      link: `https://pinyin-word-api.vercel.app/api/audio/pod/${encodeURI(
+        props.word
+      )}`,
     };
 
     this.onAnimationComplete = this.onAnimationComplete.bind(this);
@@ -56,9 +61,18 @@ class CardFront extends React.Component {
     this.setState({ quiz: false });
   }
 
+  componentDidMount() {
+    const { link } = this.state;
+
+    try {
+      const audio = new Audio(link);
+      audio.play();
+    } catch {}
+  }
+
   render() {
     const { word, frequency } = this.props;
-    const { animate, quiz } = this.state;
+    const { animate, quiz, link } = this.state;
     const audioLink = `https://pinyin-word-api.vercel.app/api/audio/pod/${encodeURI(
       word
     )}`;
@@ -68,7 +82,7 @@ class CardFront extends React.Component {
         <Card
           style={{ margin: "8px" }}
           actions={[
-            <PlayButton link={audioLink} />,
+            <PlayButton link={link} />,
             <Animate onClick={this.onAnimate} />,
             <Quiz onClick={this.onQuizStart} />,
           ]}

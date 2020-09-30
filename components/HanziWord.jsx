@@ -50,7 +50,8 @@ class HanziWord extends React.Component {
     const { word, animate, quiz } = this.props;
     const { currentAnimating, currentQuiz } = this.state;
     const hanzis = word.split("");
-    const hanziSize = (this.state.width - 120) / hanzis.length;
+    const hanziSize =
+      (this.state.width - 120) / (hanzis.length == 1 ? 2 : hanzis.length);
 
     return (
       <div
