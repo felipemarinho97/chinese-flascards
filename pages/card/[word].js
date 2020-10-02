@@ -9,20 +9,19 @@ import TraductibleSentence from "../../components/TraductibleSentence";
 import Sentences from "../../components/Sentences";
 import UsefulLinks from "../../components/UsefulLinks";
 import CardFront from "../../components/CardFront";
-import words from "../api/words.json";
+import DefaultErrorPage from "next/error";
+import Head from "next/head";
 
 const { Text, Link } = Typography;
 const { Content, Footer } = Layout;
 const { TabPane } = Tabs;
 
+export const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
 function renderTabPanes(entries) {
-  const keys = Object.keys(entries);
-
-  return keys.map((k, i) => {
-    const entry = entries[k];
-
+  return entries.map((entry, i) => {
     return (
-      <TabPane tab={entry.pinyinWithAccent} key={i}>
+      <TabPane tab={entry.pinyin} key={i}>
         {entry.definitions.map((d, i) => (
           <TraductibleSentence i={i + 1} sentence={d} />
         ))}
@@ -32,7 +31,18 @@ function renderTabPanes(entries) {
 }
 
 const Word = (props) => {
-  const { simplified, frequencyRank, hsk, entries } = props.word;
+  if (!props.word) return <></>;
+  if (props.word.message != null)
+    return (
+      <>
+        <Head>
+          <meta name="robots" content="noindex" />
+        </Head>
+        <DefaultErrorPage statusCode={404} />
+      </>
+    );
+
+  const { simplified, rank: frequencyRank, hsk, entries } = props.word;
 
   return (
     <Layout>
@@ -41,7 +51,7 @@ const Word = (props) => {
           <Tabs
             defaultActiveKey="0"
             size="large"
-            tabBarExtraContent={{ right: <Tag>HSK {hsk}</Tag> }}
+            tabBarExtraContent={{ right: <Tag>HSK {hsk ? hsk : "N/A"}</Tag> }}
           >
             {renderTabPanes(entries)}
           </Tabs>
@@ -67,24 +77,26 @@ const Word = (props) => {
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const wordsList = words.map((w) => w.simplified);
+  const res = await fetch(`${API_ROOT}/api/words`);
+
+  const wordsList = await res.json();
 
   // Get the paths we want to pre-render based on posts
   const paths = wordsList.map((w) => `/card/${encodeURI(w)}`);
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 }
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `${API_ROOT}/api/words?value=${encodeURI(params.word)}`
+    `https://pinyin-word-api.vercel.app/api/lookup/${encodeURI(params.word)}`
   );
   const word = await res.json();
 
   // Pass data to the page via props
-  return { props: { word } };
+  return { props: { word, params } };
 }
 
 export default Word;

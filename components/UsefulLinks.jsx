@@ -1,5 +1,6 @@
 import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
+import Spin from "antd/lib/spin";
 
 const { Text, Title, Link } = Typography;
 
@@ -9,24 +10,37 @@ class UsefulLinks extends React.Component {
 
     this.state = {
       links: [],
+      loading: true,
     };
   }
 
   componentDidMount() {
     const { word } = this.props;
 
+    this.fetchLinks(word);
+  }
+
+  fetchLinks(word) {
     fetch(`https://pinyin-word-api.vercel.app/api/links/${word}`)
       .then((res) => res.json())
       .then((data) => {
-        this.setState({ links: data });
-      });
+        this.setState({ links: data, loading: false });
+      })
+      .catch(() => this.fetchLinks(word));
   }
 
   render() {
-    const { links } = this.state;
+    const { links, loading } = this.state;
 
-    if (links.length == 0) {
-      return <></>;
+    if (loading) {
+      return (
+        <>
+          <Title level={4}>Useful Links</Title>
+          <div style={{ textAlign: "center" }}>
+            <Spin />
+          </div>
+        </>
+      );
     }
 
     return (

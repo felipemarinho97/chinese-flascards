@@ -55,6 +55,7 @@ class Sentences extends React.Component {
 
     this.state = {
       sentences: [],
+      isLoading: true,
     };
   }
 
@@ -65,19 +66,19 @@ class Sentences extends React.Component {
       .then((res) => res.json())
       .then((res) => res.sort((a, b) => a.hanzi.length - b.hanzi.length))
       .then((sentences) => {
-        this.setState({ sentences });
+        this.setState({ sentences, isLoading: false });
       });
   }
 
   render() {
-    const { sentences } = this.state;
+    const { sentences, isLoading } = this.state;
 
     return (
       <div>
         <Title level={4}>Sentences</Title>
         <List
           pagination={{ pageSize: 6 }}
-          loading={sentences.length == 0}
+          loading={isLoading}
           dataSource={sentences}
           renderItem={(item) => (
             <List.Item

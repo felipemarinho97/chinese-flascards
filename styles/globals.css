@@ -7,7 +7,7 @@
 }
 
 .ant-tabs-large > .ant-tabs-nav .ant-tabs-tab {
-  font-size: 22px;
+  font-size: 22px !important;
 }
 
 .hanzi-container {

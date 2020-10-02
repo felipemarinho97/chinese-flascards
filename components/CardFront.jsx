@@ -31,6 +31,8 @@ export const Animate = ({ onClick }) => {
 };
 
 class CardFront extends React.Component {
+  audio;
+
   constructor(props) {
     super(props);
 
@@ -62,14 +64,21 @@ class CardFront extends React.Component {
 
   onQuizComplete() {
     this.setState({ quiz: false });
+    this.playAudio();
   }
 
   componentDidMount() {
     const { link } = this.state;
 
     try {
-      const audio = new Audio(link);
-      audio.play();
+      this.audio = new Audio(link);
+      this.playAudio();
+    } catch {}
+  }
+
+  playAudio() {
+    try {
+      this.audio.play();
     } catch {}
   }
 
@@ -78,7 +87,10 @@ class CardFront extends React.Component {
     const { animate, quiz, link } = this.state;
 
     return (
-      <Badge.Ribbon style={{ margin: "8px" }} text={`Rank: ${frequency}`}>
+      <Badge.Ribbon
+        style={{ margin: "8px" }}
+        text={`Rank: ${frequency ? frequency : "N/A"}`}
+      >
         <Card
           style={{ margin: "8px" }}
           actions={[

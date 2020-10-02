@@ -20,6 +20,8 @@ class Hanzi extends React.Component {
       onAnimateComplete,
       quiz,
       onQuizComplete,
+      hide,
+      animatingWord,
     } = this.props;
 
     if (prevProps.width !== this.props.width) {
@@ -27,8 +29,14 @@ class Hanzi extends React.Component {
       this.writer = HanziWriter.create(word + "-container", word, this.props);
     }
 
+    if (hide && animatingWord) {
+      this.writer.hideCharacter();
+    }
+
     if (animate) {
-      this.writer.animateCharacter({ onComplete: onAnimateComplete });
+      this.writer.animateCharacter({
+        onComplete: onAnimateComplete,
+      });
     }
 
     if (quiz) {

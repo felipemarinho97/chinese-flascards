@@ -72,6 +72,10 @@ class HanziWord extends React.Component {
               width={hanziSize}
               height={hanziSize}
               padding={0}
+              hide={
+                animate ? i > currentAnimating : quiz ? i > currentQuiz : false
+              }
+              animatingWord={animate || quiz}
               word={h}
             />
           );
