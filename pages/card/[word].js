@@ -11,6 +11,7 @@ import UsefulLinks from "../../components/UsefulLinks";
 import CardFront from "../../components/CardFront";
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
+import wordsList from "./../api/words-only.json";
 
 const { Text, Link } = Typography;
 const { Content, Footer } = Layout;
@@ -77,9 +78,9 @@ const Word = (props) => {
 
 export async function getStaticPaths() {
   // Call an external API endpoint to get posts
-  const res = await fetch(`${API_ROOT}/api/words`);
+  // const res = await fetch(`${API_ROOT}/api/words`);
 
-  const wordsList = await res.json();
+  // const wordsList = await res.json();
 
   // Get the paths we want to pre-render based on posts
   const paths = wordsList.map((w) => `/card/${encodeURI(w)}`);
