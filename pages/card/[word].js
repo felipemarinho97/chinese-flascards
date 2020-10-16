@@ -4,7 +4,6 @@ import Tabs from "antd/lib/tabs";
 import Layout from "antd/lib/layout";
 import Card from "antd/lib/card";
 import React from "react";
-import { API_ROOT } from "../../components/constants";
 import TraductibleSentence from "../../components/TraductibleSentence";
 import Sentences from "../../components/Sentences";
 import UsefulLinks from "../../components/UsefulLinks";
@@ -12,6 +11,7 @@ import CardFront from "../../components/CardFront";
 import DefaultErrorPage from "next/error";
 import Head from "next/head";
 import wordsList from "./../api/words-only.json";
+import ReactVisibilitySensor from "react-visibility-sensor";
 
 const { Text, Link } = Typography;
 const { Content, Footer } = Layout;
@@ -59,7 +59,16 @@ const Word = (props) => {
           <br />
           <Sentences word={simplified} />
           <br />
-          <UsefulLinks word={simplified} />
+          <ReactVisibilitySensor>
+            {({ isVisible }) =>
+              isVisible ? (
+                <UsefulLinks word={simplified} />
+              ) : (
+                <div>Loading...</div>
+              )
+            }
+          </ReactVisibilitySensor>
+
           <br />
           <br />
           <br />
@@ -67,7 +76,7 @@ const Word = (props) => {
         </Card>
       </Content>
       <Footer>
-        <Text>Desenvolvido com ❤️ por </Text>
+        <Text>Developed with ❤️ by </Text>
         <Link target="_blank" href="https://github.com/felipemarinho97">
           Felipe Marinho
         </Link>

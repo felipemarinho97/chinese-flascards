@@ -21,6 +21,7 @@ class UsefulLinks extends React.Component {
   }
 
   fetchLinks(word) {
+    console.log("Performing links request");
     fetch(`https://pinyin-word-api.vercel.app/api/links/${word}`)
       .then((res) => res.json())
       .then((data) => {
