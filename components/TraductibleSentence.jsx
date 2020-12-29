@@ -41,10 +41,14 @@ class TraductibleSentence extends React.Component {
   fillTraduction() {
     const { sentence } = this.props;
 
+    const target = this.getTargetLanguage()
+
+    if (target == null) return
+
     fetch(
       `https://gtranslate-api.vercel.app/api/translate?text=${encodeURI(
         sentence
-      )}&text=&to=${this.getTargetLanguage()}`
+      )}&text=&to=${target}`
     )
       .then((res) => res.json())
       .then((tran) => {
