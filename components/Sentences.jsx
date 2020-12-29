@@ -5,6 +5,7 @@ import Space from "antd/lib/space";
 import Typography from "antd/lib/typography";
 import Tag from "antd/lib/tag";
 import { API_ROOT } from "./constants";
+import TraductibleSentence from "./TraductibleSentence";
 
 const { Text, Title } = Typography;
 
@@ -80,14 +81,14 @@ class Sentences extends React.Component {
           pagination={{ pageSize: 6 }}
           loading={isLoading}
           dataSource={sentences}
-          renderItem={(item) => (
+          renderItem={(item, i) => (
             <List.Item
               actions={[<PlayButton link={this.getAudioLink(item)} />]}
             >
               <Space direction="vertical">
                 <Text style={{ fontSize: "large" }}>{item.hanzi}</Text>
                 <Text type="success">{item.pinyin}</Text>
-                <Text type="secondary"> {item.translation} </Text>
+                <TraductibleSentence type="secondary" sentence={item.translation} />
                 <List.Item.Meta
                   description={
                     <Tag color={color(item.level)}>{item.level}</Tag>

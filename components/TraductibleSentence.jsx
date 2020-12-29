@@ -16,18 +16,26 @@ class TraductibleSentence extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      Traduction: (
-        <Button
-          class="traduction-btn"
-          type="primary"
-          shape="circle"
-          size="small"
-          icon={<TranslationOutlined />}
-          onClick={this.fillTraduction}
-        ></Button>
-      ),
-    });
+    if (this.getTargetLanguage() !== null)
+      this.setState({
+        Traduction: (
+          <Button
+            class="traduction-btn"
+            type="primary"
+            shape="circle"
+            size="small"
+            icon={<TranslationOutlined />}
+            onClick={this.fillTraduction}
+          ></Button>
+        ),
+      });
+  }
+
+  getTargetLanguage() {
+    const params = new URL(location.href).searchParams;
+    const target = params.get('translate');
+
+    return target
   }
 
   fillTraduction() {
@@ -36,7 +44,7 @@ class TraductibleSentence extends React.Component {
     fetch(
       `https://gtranslate-api.vercel.app/api/translate?text=${encodeURI(
         sentence
-      )}&text=&to=pt`
+      )}&text=&to=${this.getTargetLanguage()}`
     )
       .then((res) => res.json())
       .then((tran) => {
@@ -47,14 +55,16 @@ class TraductibleSentence extends React.Component {
   }
 
   render() {
-    const { sentence, i } = this.props;
+    const { sentence, i, type } = this.props;
     const { Traduction } = this.state;
+
+    const NumberCount = i != null ? (<span>{i}.&nbsp;</span>) : ''
 
     return (
       <div style={{ display: "flex" }}>
-        <span>{i}.&nbsp;</span>
+        {NumberCount}
         <span className="traductible-sentence" onClick={this.fillTraduction}>
-          <Text>{sentence}</Text>
+          <Text type={type}>{sentence}</Text>
         </span>
         {Traduction}
       </div>
