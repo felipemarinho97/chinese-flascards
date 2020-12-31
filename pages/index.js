@@ -28,14 +28,14 @@ const optionsWithDisabled = [
   { label: "HSK 4", value: 4 },
   { label: "HSK 5", value: 5 },
   { label: "HSK 6", value: 6 },
-  { label: "Non-HSK", value: 0 },
+  { label: "Non-HSK*", value: 0 },
 ];
 
 const state = {
   filter: false,
   higher: 0,
-  smaller: 2500,
-  hsk: [],
+  smaller: 25000,
+  hsk: [1],
   target: "None",
 };
 
@@ -105,7 +105,10 @@ export default function Home() {
                   }}
                 />
                 {" most frequent words."}
-              </Input.Group>
+              </Input.Group>{" "}
+              <Text style={{ fontSize: "small" }} type="secondary">
+                1.6Mi+
+              </Text>
             </Form.Item>
             <Form.Item label="Word sets to include">
               <Checkbox.Group
@@ -113,8 +116,12 @@ export default function Home() {
                   state.hsk = [...e];
                 }}
                 options={optionsWithDisabled}
-                defaultValue={["Non-HSK"]}
+                defaultValue={[1]}
               />
+              <Text style={{ fontSize: "small" }} type="secondary">
+                (*) Due to huge dataset, checking Non-HSK without "Frequency
+                filter" enabled could cause problems.
+              </Text>
             </Form.Item>
             <Form.Item label={"Translate Language"}>
               <Select
